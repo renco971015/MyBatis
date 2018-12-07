@@ -146,4 +146,9 @@ public class AppTest {
     public void testBranch(){
         System.out.println("此处用来测试分枝Branch");
     }
+
+    @Test
+    public void testBranchTwo(){
+        System.out.println("此处用来测试分枝与主分支的关系");
+    }
 }
