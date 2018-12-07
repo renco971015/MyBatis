@@ -135,4 +135,10 @@ public class AppTest {
     public void testGitUpdate(){
         System.out.println("此处用来测试gitupdate是否更新成功");
     }
+
+
+    @Test
+    public void tsetGitCommit(){
+        System.out.println("此处用来测试Commit提交和push的关系");
+    }
 }
