@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 命名空间，为了对SQL语句进行隔离
+    perdStatement对象
+           mapper.xml以st方便管理
+    Mapper代理开发时，namespace指定为mapper接口的全限定名
+-->
+    <mapper namespace="renco">
+
+</mapper>
+    <mapper namespace="renco.mapper.UserMapper">
+    <!--where条件抽取
+        建议对单表抽取，提高公用性
+    -->
+    <sql id="query_user_where">
+        <if test="userCustom!=null">
+            <if test="userCustom.username!=null">
+                and username like '%${userCustom.username}%'
+            </if>
+            <if test="userCustom.age!=0">
+                and age > #{userCustom.age}
+            </if>
+        </if>
+        <foreach collection="ids" open="and id in(" close=")" item="id" separator=",">
+            #{id}
+        </foreach>
+    </sql>
+    <delete id="deleteUser" parameterType="int">
+        delete from users where id=#{id};
+    </delete>
+        <!-- mapper.xml文件中配置的SQL语句，执行每一个SQL
+               都将封装成为Mapatement为单位管理SQL语句的
+               -->
+    <!--id 唯一标识statement-->
+    <!--parameterType：输入参数类型，通过#{} 其中名称任意 -->
+    <!--resultType：输出结果的类型，返回单条或多条记录-->
+    <select id="findUserById" parameterType="int" resultType="User">
+        select * from users where id=#{id}
+    </select>
+    <select id="findUserByName" parameterType="string" resultType="User">
+        select * from users where username=#{name}
+    </select>
+    <select id="findUserByName2" parameterType="string" resultType="User">
+        select * from users where username like '%${value}%'
+    </select>
+    <insert id="addUser" parameterType="user">
+        insert into users(username, age) values(#{username},#{age})
+        /*order ：设置执行Sql语句
+          resultType：返回类型
+          keyProperty：将主键设置到属性*/
+        <selectKey order="AFTER" resultType="int" keyProperty="id">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+    <update id="updateUser" parameterType="user" >
+        update users set username=#{username},age=#{age} where id=#{id}
+    </update>
+    <select id="findUserList" parameterType="UserQueryVo" resultType="User">
+
+        select * from Users
+        <where>
+            <include refid="query_user_where"/>
+        </where>
+    </select>
+    <select id="findUserCount" parameterType="UserQueryVo" resultType="int">
+        select count(*) from users
+        <where>
+            <include refid="query_user_where"/>
+        </where>
+    </select>
+    </mapper>
