@@ -130,4 +130,9 @@ public class AppTest {
         System.out.println("包含R的个数"+count);
         sqlSession.close();
     }
+
+    @Test
+    public void testGitUpdate(){
+        System.out.println("此处用来测试gitupdate是否更新成功");
+    }
 }

@@ -5,9 +5,6 @@
            mapper.xml以st方便管理
     Mapper代理开发时，namespace指定为mapper接口的全限定名
 -->
-    <mapper namespace="renco">
-
-</mapper>
     <mapper namespace="renco.mapper.UserMapper">
     <!--where条件抽取
         建议对单表抽取，提高公用性
