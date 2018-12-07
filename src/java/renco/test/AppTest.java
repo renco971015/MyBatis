@@ -141,4 +141,9 @@ public class AppTest {
     public void tsetGitCommit(){
         System.out.println("此处用来测试Commit提交和push的关系");
     }
+
+    @Test
+    public void testBranch(){
+        System.out.println("此处用来测试分枝Branch");
+    }
 }
